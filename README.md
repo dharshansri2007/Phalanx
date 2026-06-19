@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🛡️ Phalanx AI
+# 🛡️ Phalanx 
 
 ### The Air Gap Between User & AI.
 
