@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@theme {
+  --color-phalanx-bg: #000000;
+  --color-phalanx-card: #0A0A0A;
+  --color-phalanx-border: #1A1A1A;
+  --color-phalanx-accent: #FFFFFF;
+  --color-phalanx-danger: #EF4444;
+  --color-phalanx-safe: #10B981;
+  --color-phalanx-warning: #F59E0B;
+  --font-mono: "JetBrains Mono", monospace;
+  --font-sans: "Inter", sans-serif;
+}
+
+body {
+  background-color: var(--color-phalanx-bg);
+  color: #F9FAFB;
+  overflow-x: hidden;
+}
