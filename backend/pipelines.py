@@ -30,10 +30,7 @@ class PhalanxPipeline:
         try:
             # ── STAGE 1: Ingestion ────────────────────────────────────────────
             if raw_payload_override is not None and raw_payload_override.strip():
-                # Demo override — skips live SERP + page fetch entirely.
-                # Network-independent and instant. This is how you demo a
-                # crafted attack getting caught without depending on a real
-                # website being reachable in front of judges.
+               
                 logger.info(f"[Pipeline] START | MANUAL_OVERRIDE | {len(raw_payload_override)} chars")
                 raw_payload = raw_payload_override
                 source_url = "MANUAL_OVERRIDE"
