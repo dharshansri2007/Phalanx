@@ -22,8 +22,7 @@ from stats_agent import StatisticalAgent
 from schemas import AnalysisRequest, PipelineResponse, StatsCheckRequest, StatsCheckResponse
 
 # ─────────────────────────────────────────
-# LOGGING — configure once, here only
-# Remove basicConfig calls from agents.py and pipeline.py
+# LOGGING — configure once
 # ─────────────────────────────────────────
 logging.basicConfig(
     level=logging.INFO,
@@ -35,14 +34,12 @@ logger = logging.getLogger("phalanx.api")
 
 # ─────────────────────────────────────────
 # IN-MEMORY QUARANTINE STORE
-# Good enough for hackathon. Swap for Redis/Postgres later.
 # ─────────────────────────────────────────
 _quarantine_store: dict[str, dict] = {}
 
 
 # ─────────────────────────────────────────
 # LIFESPAN — startup + shutdown
-# Modern FastAPI pattern. Replaces deprecated @app.on_event.
 # ─────────────────────────────────────────
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -51,7 +48,7 @@ async def lifespan(app: FastAPI):
     logger.info("  PHALANX AI — PIPELINE BOOTING")
     logger.info("=" * 52)
 
-    # Hard-fail on startup if any key is missing — better than crashing mid-request
+    
     missing = [
         k for k in ["GCP_PROJECT_ID", "BRIGHT_DATA_API_KEY", "AI_ML_API_KEY"]
         if not getattr(settings, k, None)
@@ -78,16 +75,11 @@ app = FastAPI(
     description="Air-gapped 3-stage LLM firewall for secure autonomous agent data ingestion.",
     version="1.0.0",
     lifespan=lifespan,
-    docs_url="/docs",       # Swagger UI — judges will love this
+    docs_url="/docs",       
     redoc_url="/redoc",
 )
 
 
-# ─────────────────────────────────────────
-# CORS
-# Bug in your original: allow_credentials=True + allow_origins=["*"]
-# is INVALID — browsers reject it. Fixed below.
-# ─────────────────────────────────────────
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -99,7 +91,7 @@ app.add_middleware(
 # ─────────────────────────────────────────
 # REQUEST ID MIDDLEWARE
 # Every request gets a short UUID. Shows up in every log line.
-# Returned as X-Request-ID header — useful for debugging demo.
+# Returned as X-Request-ID header — useful for debugging.
 # ─────────────────────────────────────────
 @app.middleware("http")
 async def attach_request_id(request: Request, call_next):
