@@ -92,7 +92,7 @@ app.add_middleware(
 # REQUEST ID MIDDLEWARE
 # Every request gets a short UUID. Shows up in every log line.
 # Returned as X-Request-ID header — useful for debugging.
-# ─────────────────────────────────────────
+# ───────────────────────────────────────── 
 @app.middleware("http")
 async def attach_request_id(request: Request, call_next):
     rid = str(uuid.uuid4())[:8]
